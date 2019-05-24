@@ -821,7 +821,7 @@
 			return false;
 		},
 		_isIgnored: function(date, daysToBeIgnored) {
-			if(daysToBeIgnored.length > 0) {
+			if(daysToBeIgnored && daysToBeIgnored.length > 0) {
 				for(var d = 0; d < daysToBeIgnored.length; d++){
 					if(date.getDay() == daysToBeIgnored[d]) {
 						return true;
