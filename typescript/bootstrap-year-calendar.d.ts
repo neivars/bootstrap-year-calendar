@@ -58,6 +58,11 @@ interface CalendarDataSourceElement {
      * Indicates whether only the half of last day of the element range should be rendered.
      */
     endHalfDay?: boolean;
+    
+    /**
+     * Array of days which can be ignored for each data source from rendering
+     */
+    ignoreDays?: number[];
 }
 
 /**
