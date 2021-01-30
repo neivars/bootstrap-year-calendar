@@ -353,7 +353,9 @@
 									
 									if(dayData.length > 0 && (_this.options.displayDisabledDataSource || !_this._isDisabled(currentDate)))
 									{
-										_this._renderDataSourceDay($(this), currentDate, dayData);
+										if(!_this._isIgnored(currentDate, dayData[0].ignoreDays)) {
+											_this._renderDataSourceDay($(this), currentDate, dayData);
+										}
 									}
 								}
 							});
@@ -817,6 +819,16 @@
 			}
 			
 			return false;
+		},
+		_isIgnored: function(date, daysToBeIgnored) {
+			if(daysToBeIgnored && daysToBeIgnored.length > 0) {
+				for(var d = 0; d < daysToBeIgnored.length; d++){
+					if(date.getDay() == daysToBeIgnored[d]) {
+						return true;
+					}
+				}
+			}
+			return false
 		},
 		_isHidden: function(day) {
 			if(this.options.hiddenWeekDays.length > 0) {

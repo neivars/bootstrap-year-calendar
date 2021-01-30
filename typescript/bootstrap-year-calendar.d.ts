@@ -3,7 +3,7 @@
 // Definitions by: Paul David-Sivelle
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-/// <reference path="../jquery/jquery.d.ts"/>
+/// <reference types="jquery"/>
 
 /**
  * Represent a context menu item for the calendar.
@@ -58,6 +58,11 @@ interface CalendarDataSourceElement {
      * Indicates whether only the half of last day of the element range should be rendered.
      */
     endHalfDay?: boolean;
+    
+    /**
+     * Array of days which can be ignored for each data source from rendering
+     */
+    ignoreDays?: number[];
 }
 
 /**
@@ -105,12 +110,12 @@ interface CalendarOptions<T extends CalendarDataSourceElement> {
 	/**
      * The days of the week that must be displayed as disabled (0 for Sunday, 1 for Monday, etc.).
      */
-    disabledWeekDays?: int[];
+    disabledWeekDays?: number[];
 	
 	/**
      * The days of the week that must not be displayed (0 for Sunday, 1 for Monday, etc.).
      */
-    hiddenWeekDays?: int[];
+    hiddenWeekDays?: number[];
 
 	/**
      * Specifies whether the data source must be rendered on disabled days.
@@ -312,12 +317,12 @@ interface Calendar<T extends CalendarDataSourceElement> {
 	/**
      * Gets the disabled days of the week.
      */
-    getDisabledWeekDays(): int[];
+    getDisabledWeekDays(): number[];
 	
 	/**
      * Gets the hidden days of the week.
      */
-    getHiddenWeekDays(): int[];
+    getHiddenWeekDays(): number[];
 
 	/**
      * Gets a value indicating whether the data source must be rendered on disabled days.
@@ -420,7 +425,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param alwaysHalfDay Indicates whether the beginning and the end of each range should be displayed as half selected day.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setAlwaysHalfDay(alwaysHalfDay: boolean, preventRedering: boolean?): void;
+    setAlwaysHalfDay(alwaysHalfDay: boolean, preventRedering?: boolean): void;
 	
     /**
      * Sets new context menu items. This method causes a refresh of the calendar.
@@ -428,7 +433,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param contextMenuItems The new context menu items.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setContextMenuItems(contextMenuItems: CalendarContextMenuItem<T>[], preventRedering: boolean?): void;
+    setContextMenuItems(contextMenuItems: CalendarContextMenuItem<T>[], preventRedering?: boolean): void;
 	
 	/**
      * Sets the custom day renderer. This method causes a refresh of the calendar.
@@ -436,7 +441,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
 	 * @param handler The function used to render the days. This function is called during render for each day.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setCustomDayRenderer(handler: (element: JQuery, currentDate: Date) => void, preventRedering: boolean?): void;
+    setCustomDayRenderer(handler: (element: JQuery, currentDate: Date) => void, preventRedering?: boolean): void;
 	
 	/**
      * Sets the custom data source renderer. Works only with the style set to "custom". This method causes a refresh of the calendar.
@@ -444,7 +449,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
 	 * @param handler The function used to render the data source. This function is called during render for each day containing at least one event.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setCustomDataSourceRenderer(handler: (element: JQuery, currentDate: Date, events: T[]) => void, preventRedering: boolean?): void;
+    setCustomDataSourceRenderer(handler: (element: JQuery, currentDate: Date, events: T[]) => void, preventRedering?: boolean): void;
 
     /**
      * Sets a new data source. This method causes a refresh of the calendar.
@@ -452,7 +457,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param dataSource The new data source.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setDataSource(dataSource: T[], preventRedering: boolean?): void;
+    setDataSource(dataSource: T[], preventRedering?: boolean): void;
 
     /**
      * Sets the disabled days. This method causes a refresh of the calendar.
@@ -460,7 +465,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param disableDays The disabled days to set.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setDisableDays(disableDays: Date[], preventRedering: boolean?): void;
+    setDisableDays(disableDays: Date[], preventRedering?: boolean): void;
 	
 	/**
      * Sets the disabled days of the week. This method causes a refresh of the calendar.
@@ -468,7 +473,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param disableDays The disabled days of the week to set.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setDisabledWeekDays(disabledWeekDays: int[], preventRedering: boolean?): void;
+    setDisabledWeekDays(disabledWeekDays: number[], preventRedering?: boolean): void;
 	
 	/**
      * Sets the hidden days of the week. This method causes a refresh of the calendar.
@@ -476,7 +481,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param hiddenWeekDays The hidden days of the week to set.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setHiddenWeekDays(hiddenWeekDays: int[], preventRedering: boolean?): void;
+    setHiddenWeekDays(hiddenWeekDays: number[], preventRedering?: boolean): void;
 
 	/**
      * Sets a value indicating whether the data source must be rendered on disabled days. This method causes a refresh of the calendar.
@@ -484,7 +489,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param  displayDisabledDataSource Indicates whether the data source must be rendered on disabled days.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setDisplayDisabledDataSource(displayDisabledDataSource: boolean, preventRedering: boolean?): void;
+    setDisplayDisabledDataSource(displayDisabledDataSource: boolean, preventRedering?: boolean): void;
 	
     /**
      * Sets a value indicating whether the weeks number are displayed. This method causes a refresh of the calendar.
@@ -492,7 +497,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param  displayWeekNumber Indicates whether the weeks number are displayed.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setDisplayWeekNumber(displayWeekNumber: boolean, preventRedering: boolean?): void;
+    setDisplayWeekNumber(displayWeekNumber: boolean, preventRedering?: boolean): void;
 	
 	/**
      * Sets a value indicating whether the calendar header is displayed. This method causes a refresh of the calendar.
@@ -500,7 +505,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param  displayHeader Indicates whether the calendar header is displayed.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setDisplayHeader(displayHeader: boolean, preventRedering: boolean?): void;
+    setDisplayHeader(displayHeader: boolean, preventRedering?: boolean): void;
 
     /**
      * Sets a value indicating whether the default context menu must be displayed when right clicking on a day. 
@@ -509,7 +514,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param enableContextMenu Indicates whether the default context menu must be displayed when right clicking on a day.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setEnableContextMenu(enableContextMenu: boolean, preventRedering: boolean?): void;
+    setEnableContextMenu(enableContextMenu: boolean, preventRedering?: boolean): void;
 
     /**
      * Sets a value indicating whether the user can make range selection. This method causes a refresh of the calendar.
@@ -517,7 +522,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param enableRangeSelection Indicates whether the user can make range selection.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setEnableRangeSelection(enableRangeSelection: boolean, preventRedering: boolean?): void;
+    setEnableRangeSelection(enableRangeSelection: boolean, preventRedering?: boolean): void;
 
     /**
      * Sets the language used for calendar rendering. This method causes a refresh of the calendar.
@@ -525,7 +530,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param language The language to use for calendar redering.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setLanguage(language: string, preventRedering: boolean?): void;
+    setLanguage(language: string, preventRedering?: boolean): void;
 
     /**
      * Sets the maximum date of the calendar. This method causes a refresh of the calendar.
@@ -533,7 +538,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param maxDate The maximum date to set.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setMaxDate(maxDate: Date, preventRedering: boolean?): void;
+    setMaxDate(maxDate: Date, preventRedering?: boolean): void;
 
     /**
      * Sets the minimum date of the calendar. This method causes a refresh of the calendar.
@@ -541,7 +546,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param minDate The minimum date to set.
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setMinDate(minDate: Date, preventRedering: boolean?): void;
+    setMinDate(minDate: Date, preventRedering?: boolean): void;
 	
 	/**
      * Sets a value indicating whether the beginning and the end of each range should be displayed as rounded cells.
@@ -550,7 +555,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param roundRangeLimits Indicates whether the beginning and the end of each range should be displayed as rounded cells. 
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setRoundRangeLimits(roundRangeLimits: boolean, preventRedering: boolean?): void;
+    setRoundRangeLimits(roundRangeLimits: boolean, preventRedering?: boolean): void;
 
     /**
      * Sets the style to use for displaying data source. This method causes a refresh of the calendar.
@@ -558,7 +563,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param style The style to use for displaying data source ("background", "border" or "custom").
 	 * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setStyle(style: string, preventRedering: boolean?): void;
+    setStyle(style: string, preventRedering?: boolean): void;
 	
 	/**
      * Sets the starting day of the week. This method causes a refresh of the calendar.
@@ -566,7 +571,7 @@ interface Calendar<T extends CalendarDataSourceElement> {
      * @param year The starting day of the week. This option overrides the parameter define in the language file.
      * @param preventRedering Indicates whether the rendering should be prevented after the property update.
      */
-    setWeekStart(weekStart: number, preventRedering: boolean?): void;
+    setWeekStart(weekStart: number, preventRedering?: boolean): void;
 
     /**
      * Sets the year displayed on the calendar.
